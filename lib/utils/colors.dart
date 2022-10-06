@@ -8,5 +8,6 @@ class XColors {
   static Color secondaryLight = const Color(0xFFAFD3A0);
   static Color background() => const Color(0xFFFFFFFF);
   static Color white() => const Color(0xFFFFFFFF);
+  static Color black = const Color(0xFF0C1823);
 
 }

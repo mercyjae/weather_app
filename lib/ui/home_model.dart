@@ -17,5 +17,4 @@ class HomeProvider extends ChangeNotifier{
 // });
 //   }
 // }
-
- 
+}
