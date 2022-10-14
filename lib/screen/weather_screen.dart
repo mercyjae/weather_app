@@ -2,29 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/model/weather_model.dart';
-import 'package:weather_app/services/weather_service.dart';
-import 'package:weather_app/weather_controller.dart';
+import 'package:weather_app/controller/weather_controller.dart';
 
-class WeatherPage extends StatefulWidget {
-  const WeatherPage({Key? key}) : super(key: key);
+class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({Key? key}) : super(key: key);
 
   @override
-  State<WeatherPage> createState() => _WeatherPageState();
+  State<WeatherScreen> createState() => _WeatherScreenState();
 }
 
-class _WeatherPageState extends State<WeatherPage> {
-final TextEditingController input = TextEditingController();
+class _WeatherScreenState extends State<WeatherScreen> {
+  final TextEditingController input = TextEditingController();
   @override
   void initState() {
    input.text = 'London';
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
-  
-    final provider = Provider.of<Weather>(context,);
+    final provider = Provider.of<WeatherController>(context,);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: FutureBuilder(
@@ -294,3 +290,5 @@ final TextEditingController input = TextEditingController();
         );
   }
 }
+
+

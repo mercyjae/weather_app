@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/model/weather_model.dart';
 import 'package:weather_app/services/weather_service.dart';
 
-class Weather with ChangeNotifier{
-  final TextEditingController  searchInput = TextEditingController();
+class WeatherController with ChangeNotifier{
+final TextEditingController  searchInput = TextEditingController();
  final TextEditingController input = TextEditingController();
    WeatherService weatherService = WeatherService();
   WeatherModel model = WeatherModel();

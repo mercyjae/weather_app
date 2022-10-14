@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:weather_app/model/weather_model.dart';
-import 'package:weather_app/services/api_helper.dart';
  
 
 import 'package:http/http.dart' as http;
@@ -17,7 +16,7 @@ print(WeatherModel.fromJson(jsonData).city);
 return WeatherModel.fromJson(jsonData);
 
 }else{
- throw Exception('Failed to load');
+ throw Exception('Failed to load weather data');
 }
 
 
