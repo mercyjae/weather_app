@@ -20,31 +20,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<WeatherController>(context,);
+    final provider = Provider.of<WeatherController>(context,listen: false); 
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: FutureBuilder(
             future:provider.getData(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              switch(snapshot.connectionState){
-                case ConnectionState.none:
-                return Center();
-               case ConnectionState.active:
-               return Center();
-               case ConnectionState.waiting:
-               return Center(child: CircularProgressIndicator());
-               case ConnectionState.done:
-              //  if(snapshot.hasError){
-              //    return const Center(
-              //   child: Text(
-              //     'Unable to get Wall Street News. Kindly Refresh',
-              //     style:
-              //         TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
-              //   ),
-              // );
-              //  }
-               if(snapshot.hasData){
-                 SafeArea(
+            builder: (context, AsyncSnapshot snapshot) {             
+               if(snapshot.connectionState == ConnectionState.done){
+           return  SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20.0, top: 10.0),
                     child: Column(
@@ -57,7 +40,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 backgroundImage:
                                     Image.asset('assets/images/profile.png')
                                         .image),
-                             SizedBox(
+                             const SizedBox(
                               width: 20,
                             ),
                            SizedBox(
@@ -68,8 +51,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   provider.searchCity();
                                 },
                                   autofocus: false,
-                                  cursorColor: Color(0xFF36424D),
-                                  decoration: InputDecoration(
+                                  cursorColor: const Color(0xFF36424D),
+                                  decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       suffixIcon: SizedBox(
                                         width: 0,
@@ -79,12 +62,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                           color: Color(0xFF36424D),
                                         ),
                                       ),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                      enabledBorder:  OutlineInputBorder(
+                                          borderSide:  BorderSide(
                                               color: Colors.white, width: 1)))),
                             )
                           ]),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
@@ -104,7 +87,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                       'assets/images/bicycle.svg'),
                                 )
                               ]),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           CircleAvatar(
@@ -124,7 +107,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               Center(
                                   child: Stack(children: [
                                 Container(
-                                    margin: EdgeInsets.only(left: 8.0),
+                                    margin: const EdgeInsets.only(left: 8.0),
                                     child: Text(
                                         
                                         '${provider.model.city}',
@@ -134,7 +117,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                             fontSize: 16))),
                                 Container(
                                   margin:
-                                      EdgeInsets.only(right: 30.0, top: 15.0),
+                                      const EdgeInsets.only(right: 30.0, top: 15.0),
                                   child: Wrap(
                                       direction: Axis.horizontal,
                                       children: [
@@ -221,7 +204,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   )
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
@@ -277,8 +260,21 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   ),
                 );
                }
+            //    else if(snapshot.hasError){
+            //       return const Center(
+            //      child: Text(
+            //       'Unable to get weather data. Kindly Refresh',
+            //      style:
+            //           TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
+            //     ),
+            //   );
+            //     }
+            //     else if(snapshot.data == null || snapshot.data.isEmpty){
+            // return  Text('Oops! No weather data found 🥴'); }
 
-               } return Text('');
+                return const Center(
+              child: CircularProgressIndicator(color: Color(0xFF09151E),),
+            );
               }
               
              
