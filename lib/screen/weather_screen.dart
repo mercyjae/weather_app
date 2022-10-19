@@ -1,8 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
+import 'package:weather_app/model/weather_model.dart';
+import 'package:weather_app/services/weather_service.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({Key? key}) : super(key: key);
@@ -12,22 +16,17 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  final TextEditingController input = TextEditingController();
-  @override
-  void initState() {
-   input.text = 'London';
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<WeatherController>(context,listen: false); 
+    final provider = Provider.of<WeatherController>(context);
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: FutureBuilder(
-            future:provider.getData(),
-            builder: (context, AsyncSnapshot snapshot) {             
-               if(snapshot.connectionState == ConnectionState.done){
-           return  SafeArea(
+            future: provider.getData(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20.0, top: 10.0),
                     child: Column(
@@ -40,16 +39,16 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 backgroundImage:
                                     Image.asset('assets/images/profile.png')
                                         .image),
-                             const SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
-                           SizedBox(
+                            SizedBox(
                               width: 150,
                               child: TextField(
-                                controller:provider. initial ? provider.input : provider.searchInput,
-                                onEditingComplete: (){
-                                  provider.searchCity();
-                                },
+                                  controller: provider.searchInput,
+                                  onEditingComplete: () {
+                                    provider.searchCity();
+                                  },
                                   autofocus: false,
                                   cursorColor: const Color(0xFF36424D),
                                   decoration: const InputDecoration(
@@ -62,8 +61,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                           color: Color(0xFF36424D),
                                         ),
                                       ),
-                                      enabledBorder:  OutlineInputBorder(
-                                          borderSide:  BorderSide(
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
                                               color: Colors.white, width: 1)))),
                             )
                           ]),
@@ -108,183 +107,104 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   child: Stack(children: [
                                 Container(
                                     margin: const EdgeInsets.only(left: 8.0),
-                                    child: Text(
-                                        
-                                        '${provider.model.city}',
+                                    child: Text("Today's Like",
                                         style: GoogleFonts.poppins(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 16))),
                                 Container(
-                                  margin:
-                                      const EdgeInsets.only(right: 30.0, top: 15.0),
+                                  margin: const EdgeInsets.only(
+                                      right: 30.0, top: 15.0),
                                   child: Wrap(
                                       direction: Axis.horizontal,
                                       children: [
-                                        Text('${provider.model.temperature}',
+                                        Text('   ${provider.model.feelsLike}',
                                             style: GoogleFonts.poppins(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 30)),
                                         const Text(
                                           'o',
-                                          style: TextStyle(
-                                              // fontFeatures:
-                                              // [FontFeature.subscripts()],
-                                              color: Colors.white),
+                                          style: TextStyle(fontFeatures: [
+                                            FontFeature.subscripts()
+                                          ], color: Colors.white),
                                         ),
-                                        Text('C',
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 30)),
                                       ]),
                                 ),
-
-                                            Container(
-                                              margin:const  EdgeInsets.only(left: 35.0, top:20.0)
-                                ,                                child: Image.network(
-                                                'http://openweathermap.org/img/wn/${provider.model.icon}@2x.png'),
-                                            )
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 35.0, top: 20.0),
+                                  child: Image.network(
+                                      'http://openweathermap.org/img/wn/${provider.model.icon}@2x.png'),
+                                )
                               ])),
                               Positioned(
-                                  bottom: 30,
-                                  right: 3,
+                                  top: 120,
+                                  bottom: 0,
+                                  left: 200,
                                   child:
                                       Image.asset('assets/images/clear.png')),
                               Positioned(
-                                  bottom: 30,
-                                  left: 3,
+                                  top: 120,
+                                  bottom: 0,
+                                  right: 190,
                                   child:
                                       Image.asset('assets/images/windy.png')),
                               Positioned(
-                                  bottom: -10,
-                                  left: 120,
-                                  // right: 75,
+                                  top: 140,
+                                  left: 20,
+                                  right: 0,
                                   child:
                                       Image.asset('assets/images/thunder.png'))
                             ]),
                           ),
+                          const SizedBox(
+                            height: 70,
+                          ),
                           Expanded(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text('Description',
-                                          style: GoogleFonts.poppins(
-                                              color: const Color(0xFF09151E),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 16)),
-                                      Text('${provider.model.description}',
-                                          style: GoogleFonts.poppins(
-                                              color: const Color(0xFF09151E),
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12))
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text('Pressure',
-                                          style: GoogleFonts.poppins(
-                                              color: const Color(0xFF09151E),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 16)),
-                                      Text('${provider.model.pressure} atm',
-                                          style: GoogleFonts.poppins(
-                                              color: const Color(0xFF09151E),
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12))
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text('Wind Degree',
-                                          style: GoogleFonts.poppins(
-                                              color: const Color(0xFF09151E),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 16)),
-                                      Wrap(
-                                          direction: Axis.horizontal,
-                                          children: [
-                                            Text('${provider.model.windDirection}',
-                                                style: GoogleFonts.poppins(
-                                                  color:
-                                                      const Color(0xFF09151E),
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 12,
-                                                )),
-                                            const Text(
-                                              '0',
-                                              style: TextStyle(
-                                                fontSize: 9,
-                                                // fontFeatures:[ FontFeature.superscripts()]
-                                              ),
-                                            )
-                                          ])
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text('WindSpeed',
-                                          style: GoogleFonts.poppins(
-                                              color: const Color(0xFF09151E),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 16)),
-                                      Text('${provider.model.windSpeed} m/s',
-                                          style: GoogleFonts.poppins(
-                                              color: const Color(0xFF09151E),
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12))
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ],
-                          ))
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text('Today’s Mood',
+                                        style: GoogleFonts.poppins(
+                                            color: const Color(0xFF09151E),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14)),
+                                    Text('Very Good',
+                                        style: GoogleFonts.poppins(
+                                            color: const Color(0xFF09151E),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12)),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text('Tomorrow’s Mood',
+                                        style: GoogleFonts.poppins(
+                                            color: const Color(0xFF09151E),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14)),
+                                    Text('Excellent ',
+                                        style: GoogleFonts.poppins(
+                                            color: const Color(0xFF09151E),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12))
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
                         ]),
                   ),
                 );
-               }
-            //    else if(snapshot.hasError){
-            //       return const Center(
-            //      child: Text(
-            //       'Unable to get weather data. Kindly Refresh',
-            //      style:
-            //           TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
-            //     ),
-            //   );
-            //     }
-            //     else if(snapshot.data == null || snapshot.data.isEmpty){
-            // return  Text('Oops! No weather data found 🥴'); }
-
-                return const Center(
-              child: CircularProgressIndicator(color: Color(0xFF09151E),),
-            );
               }
-              
-             
-       
-            )
-        //}
-        
 
+              return const Center(
+                child: CircularProgressIndicator(color: Colors.black),
+              );
+            })
         );
   }
 }
-
-

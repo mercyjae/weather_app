@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
-import 'package:weather_app/utils/locator_setup.dart';
-import 'screen/weather_screen.dart';
+import 'package:weather_app/screen/splash_screen.dart';
+import 'package:weather_app/screen/weather_screen.dart';
+
+
 
 void main() {
-  locateSetup();
   runApp(const MyApp());
 }
 
@@ -16,12 +17,11 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider<WeatherController>(
       create: (context) => WeatherController(),
        child: MaterialApp(debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+          title: 'Weathree',
           theme: ThemeData(
-        
             primarySwatch: Colors.blue,
           ),
-          home:  WeatherScreen()
+          home: const SplashScreen()
         
     
     ));
