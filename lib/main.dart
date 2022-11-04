@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/screen/splash_screen.dart';
-import 'package:weather_app/screen/weather_screen.dart';
+
 
 
 

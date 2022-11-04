@@ -1,12 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
-import 'package:weather_app/model/weather_model.dart';
-import 'package:weather_app/services/weather_service.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({Key? key}) : super(key: key);
@@ -129,6 +126,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                             FontFeature.subscripts()
                                           ], color: Colors.white),
                                         ),
+                                        Text('C',
+                                            style: GoogleFonts.poppins(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 30)),
                                       ]),
                                 ),
                                 Container(
@@ -141,13 +143,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               Positioned(
                                   top: 120,
                                   bottom: 0,
-                                  left: 200,
+                                  left: 190,
                                   child:
                                       Image.asset('assets/images/clear.png')),
                               Positioned(
                                   top: 120,
                                   bottom: 0,
-                                  right: 190,
+                                  right: 180,
                                   child:
                                       Image.asset('assets/images/windy.png')),
                               Positioned(
@@ -158,53 +160,106 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                       Image.asset('assets/images/thunder.png'))
                             ]),
                           ),
-                          const SizedBox(
-                            height: 70,
-                          ),
+                        
                           Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text('Today’s Mood',
-                                        style: GoogleFonts.poppins(
-                                            color: const Color(0xFF09151E),
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14)),
-                                    Text('Very Good',
-                                        style: GoogleFonts.poppins(
-                                            color: const Color(0xFF09151E),
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12)),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Text('Tomorrow’s Mood',
-                                        style: GoogleFonts.poppins(
-                                            color: const Color(0xFF09151E),
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14)),
-                                    Text('Excellent ',
-                                        style: GoogleFonts.poppins(
-                                            color: const Color(0xFF09151E),
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12))
-                                  ],
-                                )
-                              ],
-                            ),
-                          )
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text('Description',
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFF09151E),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16)),
+                                      Text('${provider.model.description}',
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFF09151E),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12))
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text('Humidity',
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFF09151E),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16)),
+                                      Text('${provider.model.humidity} g/kg',
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFF09151E),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12))
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text('Wind Direction',
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFF09151E),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16)),
+                                      Wrap(
+                                          direction: Axis.horizontal,
+                                          children: [
+                                            Text(
+                                                '${provider.model.windDirection}',
+                                                style: GoogleFonts.poppins(
+                                                  color:
+                                                      const Color(0xFF09151E),
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12,
+                                                )),
+                                            const Text(
+                                              '0',
+                                              style: TextStyle(
+                                                  fontSize: 9,
+                                                  fontFeatures: [
+                                                    FontFeature.superscripts()
+                                                  ]),
+                                            )
+                                          ])
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text('WindSpeed',
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFF09151E),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16)),
+                                      Text('${provider.model.windSpeed} m/s',
+                                          style: GoogleFonts.poppins(
+                                              color: const Color(0xFF09151E),
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12))
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          ))
                         ]),
                   ),
                 );
-              }
-
-              return const Center(
+              } return const Center(
                 child: CircularProgressIndicator(color: Colors.black),
               );
-            })
-        );
+            }));
   }
 }
