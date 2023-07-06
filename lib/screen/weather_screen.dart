@@ -177,8 +177,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                               color: const Color(0xFF09151E),
                                               fontWeight: FontWeight.w500,
                                               fontSize: 16)),
-                                      Text(
-                                          '${provider.model.description ?? ''}',
+                                      Text(provider.model.description ?? '',
                                           style: GoogleFonts.poppins(
                                               color: const Color(0xFF09151E),
                                               fontWeight: FontWeight.w400,
@@ -192,8 +191,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                               color: const Color(0xFF09151E),
                                               fontWeight: FontWeight.w500,
                                               fontSize: 16)),
-                                      Text(
-                                          '${provider.model.humidity ?? ''} g/kg',
+                                      Text('${provider.model.humidity ?? ''} g/kg',
                                           style: GoogleFonts.poppins(
                                               color: const Color(0xFF09151E),
                                               fontWeight: FontWeight.w400,
@@ -220,7 +218,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                           direction: Axis.horizontal,
                                           children: [
                                             Text(
-                                                '${provider.model.windDirection ?? ''}',
+                                                provider.model.windDirection ?? '',
                                                 style: GoogleFonts.poppins(
                                                   color:
                                                       const Color(0xFF09151E),
@@ -245,8 +243,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                               color: const Color(0xFF09151E),
                                               fontWeight: FontWeight.w500,
                                               fontSize: 16)),
-                                      Text(
-                                          '${provider.model.windSpeed ?? ''} m/s',
+                                      Text('${provider.model.windSpeed} m/s',
                                           style: GoogleFonts.poppins(
                                               color: const Color(0xFF09151E),
                                               fontWeight: FontWeight.w400,
