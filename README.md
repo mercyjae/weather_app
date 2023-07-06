@@ -1,6 +1,6 @@
 # Weathree
 
-A weather Application that can be use to check the weather conditions of your current city. It was built using the OpenWeatherAPI.
+A weather application that can be used to check the weather conditions of your current city. It was built using the OpenWeatherAPI.
 
 # Figma Design Link
 https://www.figma.com/file/ndxDnWTJwbVNnyQG5RB2gL/Weather-mobile-app-ui-Design-(concept)-(Community)?type=design&mode=design&t=hde7KpVrqgSFtPyc-0
